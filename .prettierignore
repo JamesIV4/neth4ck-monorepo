@@ -5,6 +5,8 @@ pnpm-lock.yaml
 .git/
 tmp/
 .nx/
+emsdk/
+.claude/
 packages/*/build/nethack.js
 packages/*/build/nethack.wasm
 packages/*/NetHack/
