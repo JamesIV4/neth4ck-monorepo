@@ -15,7 +15,6 @@
     },
     "files": [
         "src/",
-        "build/package.json",
         "build/nethack.js",
         "build/nethack.wasm",
         "LICENSE.md",

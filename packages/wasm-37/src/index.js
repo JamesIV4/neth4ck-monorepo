@@ -1,6 +1,2 @@
-import { createRequire } from "module";
-const require = createRequire(import.meta.url);
-
-const Module = require("../build/nethack.js");
-export default Module;
+export { default } from "../build/nethack.js";
 export const nethackVersion = "3.7";
