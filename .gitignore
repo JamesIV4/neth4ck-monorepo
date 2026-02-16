@@ -1,11 +1,45 @@
-node_modules
-docs
+# Dependencies
+node_modules/
+
+# Nx cache
+.nx/
+
+# Temporary files
+tmp/
+.tmp/
+
+# Build outputs
+dist/
+
+# WASM build artifacts (built from submodules, included in npm packages via "files")
+packages/*/build/nethack.js
+packages/*/build/nethack.wasm
+
+# Coverage
+coverage/
+.nyc_output/
+
+# Logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+
+# OS generated files
 .DS_Store
-npm-debug.log
-coverage
-.nyc_output
 *~
+
+# IDE/Editor files
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Old NetHackJS files
+docs
 docs.json
 .nhairc.js
-build/nethack.js
-build/nethack.wasm

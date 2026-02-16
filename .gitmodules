@@ -1,3 +1,8 @@
-[submodule "NetHack"]
-	path = NetHack
-	url = https://github.com/NetHack/NetHack
+[submodule "NetHack-3.6"]
+	path = NetHack-3.6
+	url = https://github.com/apowers313/NetHack.git
+	branch = wasm-3.6.7
+[submodule "NetHack-3.7"]
+	path = NetHack-3.7
+	url = https://github.com/NetHack/NetHack.git
+	branch = NetHack-3.7

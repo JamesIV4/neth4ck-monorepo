@@ -1,0 +1,93 @@
+name: Release
+
+on:
+    workflow_run:
+        workflows: ["CI"]
+        types:
+            - completed
+        branches:
+            - master
+
+concurrency:
+    group: ${{ github.workflow }}-${{ github.ref }}
+
+jobs:
+    release:
+        name: Release
+        runs-on: ubuntu-latest
+        # Only run if CI workflow succeeded
+        if: ${{ github.event.workflow_run.conclusion == 'success' }}
+        permissions:
+            contents: write
+            issues: write
+            pull-requests: write
+            id-token: write
+        steps:
+            - uses: actions/checkout@v4
+              with:
+                  fetch-depth: 0
+                  token: ${{ secrets.GITHUB_TOKEN }}
+
+            - uses: pnpm/action-setup@v4
+
+            # Note: Do NOT set registry-url - it interferes with OIDC trusted publishing
+            - uses: actions/setup-node@v4
+              with:
+                  node-version: 22.x
+                  cache: "pnpm"
+
+            # Upgrade npm to 11.5.1+ for OIDC trusted publishing support
+            - name: Upgrade npm for trusted publishing
+              run: |
+                  npm install -g npm@latest
+                  npm --version
+
+            - name: Install dependencies
+              run: pnpm install --frozen-lockfile
+              env:
+                  HUSKY: "0"
+
+            # Download build artifacts from CI workflow instead of rebuilding
+            - name: Download wasm-367 build
+              uses: actions/download-artifact@v4
+              with:
+                  name: build-wasm-367
+                  path: packages/wasm-367/build/
+                  run-id: ${{ github.event.workflow_run.id }}
+                  github-token: ${{ secrets.GITHUB_TOKEN }}
+
+            - name: Download wasm-37 build
+              uses: actions/download-artifact@v4
+              with:
+                  name: build-wasm-37
+                  path: packages/wasm-37/build/
+                  run-id: ${{ github.event.workflow_run.id }}
+                  github-token: ${{ secrets.GITHUB_TOKEN }}
+
+            - name: Configure Git
+              run: |
+                  git config user.name "github-actions[bot]"
+                  git config user.email "github-actions[bot]@users.noreply.github.com"
+
+            - name: Cache Nx
+              uses: actions/cache@v4
+              with:
+                  path: .nx/cache
+                  key: nx-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}-${{ github.sha }}
+                  restore-keys: |
+                      nx-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}-
+                      nx-${{ runner.os }}-
+
+            - name: Version and Release
+              run: |
+                  echo "npm version: $(npm --version)"
+                  echo "node version: $(node --version)"
+                  pnpm exec nx release --yes --verbose
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                  # OIDC trusted publishing - npm will use the GitHub Actions OIDC token
+                  NPM_CONFIG_PROVENANCE: true
+                  # Clear any NODE_AUTH_TOKEN that might interfere with OIDC
+                  NODE_AUTH_TOKEN: ""
+                  # Disable husky hooks
+                  HUSKY: "0"

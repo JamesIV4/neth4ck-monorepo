@@ -1,0 +1,11 @@
+node_modules/
+dist/
+coverage/
+pnpm-lock.yaml
+.git/
+tmp/
+.nx/
+packages/*/build/nethack.js
+packages/*/build/nethack.wasm
+NetHack/
+NetHack-3.6/

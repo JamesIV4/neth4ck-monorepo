@@ -1,35 +1,40 @@
 {
-  "name": "@neth4ck/neth4ck",
-  "version": "1.0.4",
-  "description": "The original NetHack rogue-like game built as a WebAssembly module",
-  "main": "src/nethackShim.js",
-  "scripts": {
-    "test": "npm run build && node test/test.js",
-    "prepublish": "npm run build",
-    "clean": "rm ./build/nethack.js; rm ./build/nethack.wasm; cd NetHack && git clean -X -f; true",
-    "build:nethack:config": "cd NetHack/sys/unix && ./setup.sh hints/macOS.2020",
-    "build:nethack:lua": "cd NetHack && make fetch-lua",
-    "build:nethack": "cd NetHack && make CROSS_TO_WASM=1",
-    "build:copy": "cp NetHack/targets/wasm/nethack.js NetHack/targets/wasm/nethack.wasm ./build",
-    "build": "npm run build:nethack:config && npm run build:nethack:lua && npm run build:nethack && npm run build:copy",
-    "prepack": "npm run build"
-  },
-  "keywords": [
-    "nethack",
-    "rogue",
-    "rogue-like",
-    "roguelike",
-    "dungeon",
-    "dungeons",
-    "game",
-    "rpg",
-    "dnd"
-  ],
-  "author": "Adam Powers <apowers@ato.ms>",
-  "license": "SEE LICENSE IN LICENSE.md",
-  "devDependencies": {
-    "eslint": "^7.13.0",
-    "eslint-plugin-jsdoc": "^30.7.7",
-    "eslint-plugin-mocha": "^8.0.0"
-  }
+    "name": "neth4ck-monorepo",
+    "version": "1.0.0",
+    "private": true,
+    "type": "module",
+    "description": "NetHack WebAssembly monorepo — shim + WASM packages",
+    "packageManager": "pnpm@10.0.0",
+    "engines": {
+        "node": ">=18.19.0"
+    },
+    "scripts": {
+        "build": "pnpm exec nx run-many --target=build",
+        "test": "pnpm exec nx run-many --target=test",
+        "lint": "pnpm exec nx run-many --target=lint",
+        "format": "prettier --write .",
+        "format:check": "prettier --check .",
+        "prepare": "husky",
+        "prepush": "pnpm exec nx run-many -t lint test --parallel=3"
+    },
+    "config": {
+        "commitizen": {
+            "path": "cz-conventional-changelog"
+        }
+    },
+    "devDependencies": {
+        "@commitlint/cli": "^19.8.1",
+        "@commitlint/config-conventional": "^19.8.1",
+        "@eslint/js": "^9.29.0",
+        "commitizen": "^4.3.1",
+        "cz-conventional-changelog": "^3.3.0",
+        "eslint": "^9.29.0",
+        "eslint-plugin-simple-import-sort": "^12.1.1",
+        "globals": "^15.12.0",
+        "husky": "^9.1.7",
+        "nx": "22.3.3",
+        "prettier": "^3.4.2",
+        "tsx": "^4.20.3",
+        "vitest": "^3.2.4"
+    }
 }

@@ -1,0 +1,32 @@
+{
+    "name": "@neth4ck/neth4ck",
+    "version": "2.0.0",
+    "description": "NetHack WASM shim — version-agnostic callback bridge and module initializer",
+    "type": "module",
+    "main": "src/index.js",
+    "scripts": {
+        "lint": "eslint src/"
+    },
+    "exports": {
+        ".": "./src/index.js"
+    },
+    "files": [
+        "src/",
+        "LICENSE.md",
+        "README.md"
+    ],
+    "keywords": [
+        "nethack",
+        "wasm",
+        "webassembly",
+        "roguelike",
+        "game",
+        "shim"
+    ],
+    "author": "Adam Powers <apowers@ato.ms>",
+    "license": "SEE LICENSE IN LICENSE.md",
+    "publishConfig": {
+        "access": "public",
+        "provenance": true
+    }
+}
