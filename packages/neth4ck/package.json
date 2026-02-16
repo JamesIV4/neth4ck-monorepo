@@ -1,6 +1,6 @@
 {
     "name": "@neth4ck/neth4ck",
-    "version": "2.0.1",
+    "version": "2.0.2",
     "description": "NetHack WASM shim — version-agnostic callback bridge and module initializer",
     "type": "module",
     "main": "src/index.js",
