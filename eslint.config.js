@@ -20,9 +20,8 @@ export default [
             "**/*.config.js",
             // Build artifacts (Emscripten-generated WASM JS)
             "packages/*/build/**",
-            // NetHack submodule
-            "NetHack/**",
-            "NetHack-3.6/**",
+            // NetHack submodules
+            "packages/*/NetHack/**",
             // Nx cache
             ".nx/**",
         ],

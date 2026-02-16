@@ -25,6 +25,14 @@
     ],
     "author": "Adam Powers <apowers@ato.ms>",
     "license": "SEE LICENSE IN LICENSE.md",
+    "peerDependencies": {
+        "@neth4ck/wasm-367": ">=2.0.0",
+        "@neth4ck/wasm-37": ">=2.0.0"
+    },
+    "peerDependenciesMeta": {
+        "@neth4ck/wasm-367": { "optional": true },
+        "@neth4ck/wasm-37": { "optional": true }
+    },
     "publishConfig": {
         "access": "public",
         "provenance": true

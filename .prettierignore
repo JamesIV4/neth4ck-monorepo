@@ -7,5 +7,4 @@ tmp/
 .nx/
 packages/*/build/nethack.js
 packages/*/build/nethack.wasm
-NetHack/
-NetHack-3.6/
+packages/*/NetHack/

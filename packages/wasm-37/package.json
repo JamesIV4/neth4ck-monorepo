@@ -5,6 +5,7 @@
     "type": "module",
     "main": "src/index.js",
     "scripts": {
+        "build": "./build-wasm.sh",
         "lint": "eslint src/"
     },
     "exports": {
