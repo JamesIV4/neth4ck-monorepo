@@ -23,6 +23,11 @@
         "game",
         "shim"
     ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/apowers313/neth4ck-monorepo",
+        "directory": "packages/neth4ck"
+    },
     "author": "Adam Powers <apowers@ato.ms>",
     "license": "SEE LICENSE IN LICENSE.md",
     "peerDependencies": {
