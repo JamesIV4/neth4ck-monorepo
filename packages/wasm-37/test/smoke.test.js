@@ -97,7 +97,7 @@ describe("@neth4ck/wasm-37", () => {
 
             const result = JSON.parse(stdout.trim());
             expect(result.callbackCount).toBeGreaterThan(0);
-            expect(result.callbackNames).toContain("shim_player_selection_or_tty");
+            expect(result.callbackNames).toContain("shim_player_selection_cb");
             expect(result.error).toBeNull();
         }, 20000);
     });

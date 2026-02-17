@@ -111,7 +111,7 @@ const callback = async (name, ...args) => {
     }
 
     switch (name) {
-        case "shim_player_selection_or_tty": return false;
+        case "shim_player_selection_cb": return false;
         case "shim_create_nhwindow": return 1;
         case "shim_select_menu": return 0;
         case "shim_nhgetch": return 32;

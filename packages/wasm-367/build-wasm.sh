@@ -103,9 +103,10 @@ echo "  WASM data directory ready: $WASM_DATA"
 echo ""
 echo "--- Phase 3: Building WASM game ---"
 
-cat >> "$NH/src/Makefile" << 'NOOP_RULES'
-
-# === Added by build-wasm.sh ===
+# Write no-op rules to a separate file (idempotent: overwritten each build)
+cat > "$NH/src/Makefile.wasm-noop" << 'NOOP_RULES'
+# No-op rules to prevent src/Makefile from rebuilding native utilities with emcc.
+# Written by build-wasm.sh; included by src/Makefile via -include directive.
 ../util/makedefs: ;
 ../util/lev_comp: ;
 ../util/dgn_comp: ;
@@ -116,6 +117,11 @@ cat >> "$NH/src/Makefile" << 'NOOP_RULES'
 vis_tab.c: ;
 ../include/date.h: ;
 NOOP_RULES
+
+# Append -include directive only if not already present (idempotent)
+if ! grep -q 'Makefile.wasm-noop' "$NH/src/Makefile"; then
+    echo '-include Makefile.wasm-noop' >> "$NH/src/Makefile"
+fi
 
 echo "  Cleaning old object files..."
 rm -f "$NH/src/"*.o "$NH/src/Sysunix" "$NH/src/nethack" "$NH/src/nethack.js" "$NH/src/nethack.wasm"

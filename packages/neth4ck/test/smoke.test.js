@@ -85,7 +85,7 @@ describe.each([
     {
         label: "wasm-37",
         version: "37",
-        playerSelectionCallback: "shim_player_selection_or_tty",
+        playerSelectionCallback: "shim_player_selection_cb",
         minNhdatSize: 1_400_000,
         requiredFsFiles: ["nhdat", "sysconf", "record", "logfile", "xlogfile", "perm", "symbols"],
     },
