@@ -3,7 +3,7 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { promisify } from "node:util";
 
-import { beforeAll,describe, expect, it } from "vitest";
+import { beforeAll, describe, expect, it } from "vitest";
 
 const execFileAsync = promisify(execFile);
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -89,11 +89,7 @@ describe("@neth4ck/wasm-37", () => {
 
     describe("game initialization", () => {
         it("reaches player selection via callbacks", async () => {
-            const { stdout } = await execFileAsync(
-                "node",
-                [join(__dirname, "run-game.mjs")],
-                { timeout: 15000 },
-            );
+            const { stdout } = await execFileAsync("node", [join(__dirname, "run-game.mjs")], { timeout: 15000 });
 
             const result = JSON.parse(stdout.trim());
             expect(result.callbackCount).toBeGreaterThan(0);

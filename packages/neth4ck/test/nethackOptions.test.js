@@ -1,4 +1,4 @@
-import { describe, expect,it } from "vitest";
+import { describe, expect, it } from "vitest";
 
 import { createNethackOptions } from "../src/nethackOptions.js";
 
@@ -25,9 +25,7 @@ describe("createNethackOptions", () => {
     });
 
     it("throws for unrecognized option", () => {
-        expect(() => createNethackOptions({ bogus: "value" })).toThrow(
-            "NetHack option not recognized: bogus",
-        );
+        expect(() => createNethackOptions({ bogus: "value" })).toThrow("NetHack option not recognized: bogus");
     });
 
     it("throws for wrong type on boolean option", () => {
@@ -37,8 +35,6 @@ describe("createNethackOptions", () => {
     });
 
     it("throws for wrong type on string option", () => {
-        expect(() => createNethackOptions({ name: 42 })).toThrow(
-            "Expected NetHack option 'name' to be string",
-        );
+        expect(() => createNethackOptions({ name: 42 })).toThrow("Expected NetHack option 'name' to be string");
     });
 });

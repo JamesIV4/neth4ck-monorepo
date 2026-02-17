@@ -41,12 +41,12 @@ const results = {
     lastCallback: null,
     // Sampled decoded args for key callbacks
     decodedArgs: {
-        "shim_create_nhwindow": [],
-        "shim_display_nhwindow": [],
-        "shim_putstr": [],
-        "shim_status_update": [],
-        "shim_print_glyph": [],
-        "shim_select_menu": [],
+        shim_create_nhwindow: [],
+        shim_display_nhwindow: [],
+        shim_putstr: [],
+        shim_status_update: [],
+        shim_print_glyph: [],
+        shim_select_menu: [],
     },
     // Module capabilities
     moduleExports: {},
@@ -111,25 +111,36 @@ const callback = async (name, ...args) => {
     }
 
     switch (name) {
-        case "shim_player_selection_cb": return false;
-        case "shim_create_nhwindow": return 1;
-        case "shim_select_menu": return 0;
-        case "shim_nhgetch": return 32;
-        case "shim_nh_poskey": return 32;
-        case "shim_yn_function": return 121;
-        case "shim_message_menu": return 0;
-        case "shim_getmsghistory": return "";
-        case "shim_doprev_message": return 0;
-        case "shim_get_ext_cmd": return -1;
-        case "shim_ctrl_nhwindow": return 0;
-        default: return 0;
+        case "shim_player_selection_cb":
+            return false;
+        case "shim_create_nhwindow":
+            return 1;
+        case "shim_select_menu":
+            return 0;
+        case "shim_nhgetch":
+            return 32;
+        case "shim_nh_poskey":
+            return 32;
+        case "shim_yn_function":
+            return 121;
+        case "shim_message_menu":
+            return 0;
+        case "shim_getmsghistory":
+            return "";
+        case "shim_doprev_message":
+            return 0;
+        case "shim_get_ext_cmd":
+            return -1;
+        case "shim_ctrl_nhwindow":
+            return 0;
+        default:
+            return 0;
     }
 };
 
 async function main() {
-    const createModule = version === "367"
-        ? (await import("@neth4ck/wasm-367")).default
-        : (await import("@neth4ck/wasm-37")).default;
+    const createModule =
+        version === "367" ? (await import("@neth4ck/wasm-367")).default : (await import("@neth4ck/wasm-37")).default;
 
     const moduleConfig = {
         noInitialRun: true,

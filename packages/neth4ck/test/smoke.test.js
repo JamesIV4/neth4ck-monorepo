@@ -33,9 +33,13 @@ describe("@neth4ck/neth4ck", () => {
     });
 
     it("throws if third argument is not an object", async () => {
-        await expect(nethackStart(() => {}, () => {}, "bad")).rejects.toThrow(
-            "expected third argument to be object",
-        );
+        await expect(
+            nethackStart(
+                () => {},
+                () => {},
+                "bad",
+            ),
+        ).rejects.toThrow("expected third argument to be object");
     });
 });
 
@@ -43,11 +47,9 @@ describe("@neth4ck/neth4ck", () => {
 // Helper: run the subprocess and parse JSON results
 // ---------------------------------------------------------------------------
 function runGame(version, extraArgs = []) {
-    return execFileAsync(
-        "node",
-        [join(__dirname, "run-game-shim.mjs"), version, ...extraArgs],
-        { timeout: 15000 },
-    ).then(({ stdout }) => JSON.parse(stdout.trim()));
+    return execFileAsync("node", [join(__dirname, "run-game-shim.mjs"), version, ...extraArgs], {
+        timeout: 15000,
+    }).then(({ stdout }) => JSON.parse(stdout.trim()));
 }
 
 // Expected callbacks that both versions MUST fire during init

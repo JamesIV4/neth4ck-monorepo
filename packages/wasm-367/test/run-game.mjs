@@ -17,7 +17,7 @@ const callbackNameSet = new Set();
 
 function outputAndExit() {
     results.callbackNames = [...callbackNameSet].sort();
-    process.stdout.write(`${JSON.stringify(results)  }\n`);
+    process.stdout.write(`${JSON.stringify(results)}\n`);
     process.exit(0);
 }
 
@@ -32,26 +32,51 @@ async function main() {
     globalThis.nethackGlobal.helpers = {
         getPointerValue: (name, ptr, type) => {
             switch (type) {
-                case "i": case "2": return Module.getValue(ptr, "i32");
-                case "0": return Module.getValue(ptr, "i8");
-                case "1": return Module.getValue(ptr, "i16");
-                case "s": return Module.UTF8ToString(ptr);
-                case "p": return ptr;
-                case "b": return Module.getValue(ptr, "i8") !== 0;
-                case "c": return String.fromCharCode(Module.getValue(ptr, "i8"));
-                default: return ptr;
+                case "i":
+                case "2":
+                    return Module.getValue(ptr, "i32");
+                case "0":
+                    return Module.getValue(ptr, "i8");
+                case "1":
+                    return Module.getValue(ptr, "i16");
+                case "s":
+                    return Module.UTF8ToString(ptr);
+                case "p":
+                    return ptr;
+                case "b":
+                    return Module.getValue(ptr, "i8") !== 0;
+                case "c":
+                    return String.fromCharCode(Module.getValue(ptr, "i8"));
+                default:
+                    return ptr;
             }
         },
         setPointerValue: (name, ptr, type, val) => {
-            if (!ptr) {return;}
+            if (!ptr) {
+                return;
+            }
             switch (type) {
-                case "i": case "2": Module.setValue(ptr, val | 0, "i32"); break;
-                case "0": Module.setValue(ptr, val | 0, "i8"); break;
-                case "1": Module.setValue(ptr, val | 0, "i16"); break;
-                case "b": Module.setValue(ptr, val ? 1 : 0, "i8"); break;
-                case "c": Module.setValue(ptr, typeof val === "string" ? val.charCodeAt(0) : (val | 0), "i8"); break;
-                case "v": break;
-                default: Module.setValue(ptr, val | 0, "i32"); break;
+                case "i":
+                case "2":
+                    Module.setValue(ptr, val | 0, "i32");
+                    break;
+                case "0":
+                    Module.setValue(ptr, val | 0, "i8");
+                    break;
+                case "1":
+                    Module.setValue(ptr, val | 0, "i16");
+                    break;
+                case "b":
+                    Module.setValue(ptr, val ? 1 : 0, "i8");
+                    break;
+                case "c":
+                    Module.setValue(ptr, typeof val === "string" ? val.charCodeAt(0) : val | 0, "i8");
+                    break;
+                case "v":
+                    break;
+                default:
+                    Module.setValue(ptr, val | 0, "i32");
+                    break;
             }
         },
     };
@@ -66,16 +91,26 @@ async function main() {
         }
 
         switch (name) {
-            case "shim_create_nhwindow": return 1;
-            case "shim_select_menu": return 0;
-            case "shim_nhgetch": return 32;
-            case "shim_nh_poskey": return 32;
-            case "shim_yn_function": return 121;
-            case "shim_message_menu": return 0;
-            case "shim_getmsghistory": return "";
-            case "shim_doprev_message": return 0;
-            case "shim_get_ext_cmd": return -1;
-            default: return 0;
+            case "shim_create_nhwindow":
+                return 1;
+            case "shim_select_menu":
+                return 0;
+            case "shim_nhgetch":
+                return 32;
+            case "shim_nh_poskey":
+                return 32;
+            case "shim_yn_function":
+                return 121;
+            case "shim_message_menu":
+                return 0;
+            case "shim_getmsghistory":
+                return "";
+            case "shim_doprev_message":
+                return 0;
+            case "shim_get_ext_cmd":
+                return -1;
+            default:
+                return 0;
         }
     };
 

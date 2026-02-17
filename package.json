@@ -10,12 +10,12 @@
     },
     "scripts": {
         "build": "pnpm exec nx run-many --target=build",
-        "test": "pnpm exec nx run-many --target=test",
+        "test": "pnpm exec vitest run",
         "lint": "pnpm exec nx run-many --target=lint",
         "format": "prettier --write .",
         "format:check": "prettier --check .",
         "prepare": "husky",
-        "prepush": "pnpm exec nx run-many -t lint test --parallel=3"
+        "prepush": "pnpm exec nx run-many -t lint && pnpm exec vitest run"
     },
     "config": {
         "commitizen": {
