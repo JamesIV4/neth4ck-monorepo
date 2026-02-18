@@ -88,13 +88,48 @@ describe("@neth4ck/wasm-37", () => {
     });
 
     describe("game initialization", () => {
-        it("reaches player selection via callbacks", async () => {
-            const { stdout } = await execFileAsync("node", [join(__dirname, "run-game.mjs")], { timeout: 15000 });
+        let result;
 
-            const result = JSON.parse(stdout.trim());
+        beforeAll(async () => {
+            const { stdout } = await execFileAsync("node", [join(__dirname, "run-game.mjs")], { timeout: 15000 });
+            result = JSON.parse(stdout.trim());
+        }, 20000);
+
+        it("reaches player selection via callbacks", () => {
             expect(result.callbackCount).toBeGreaterThan(0);
             expect(result.callbackNames).toContain("shim_player_selection_cb");
             expect(result.error).toBeNull();
-        }, 20000);
+        });
+
+        it("has mapGlyphInfoHelper function", () => {
+            expect(result.glyphHelper).toBeDefined();
+            expect(result.glyphHelper.isFunction).toBe(true);
+        });
+
+        it("mapGlyphInfoHelper returns expected fields", () => {
+            expect(result.glyphHelper.result).toBeDefined();
+            const r = result.glyphHelper.result;
+            expect(r).toHaveProperty("glyph");
+            expect(r).toHaveProperty("ttychar");
+            expect(r).toHaveProperty("ch");
+            expect(r).toHaveProperty("framecolor");
+            expect(r).toHaveProperty("glyphflags");
+            expect(r).toHaveProperty("color");
+            expect(r).toHaveProperty("symidx");
+            expect(r).toHaveProperty("customcolor");
+            expect(r).toHaveProperty("color256idx");
+            expect(r).toHaveProperty("tileidx");
+            expect(r).toHaveProperty("x");
+            expect(r).toHaveProperty("y");
+            expect(r).toHaveProperty("mgflags");
+        });
+
+        it("mapGlyphInfoHelper returns a printable character", () => {
+            const ch = result.glyphHelper.result.ch;
+            expect(ch.length).toBe(1);
+            expect(ch.charCodeAt(0)).toBeGreaterThanOrEqual(32);
+            expect(ch.charCodeAt(0)).toBeLessThanOrEqual(126);
+        });
+
     });
 });

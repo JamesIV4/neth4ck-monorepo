@@ -11,6 +11,7 @@ const results = {
     callbackNames: [],
     lastCallback: null,
     error: null,
+    glyphHelper: null,
 };
 
 const callbackNameSet = new Set();
@@ -41,6 +42,19 @@ async function main() {
 
         switch (name) {
             case "shim_player_selection_cb":
+                // Game is initialized at this point -- test glyph helper
+                try {
+                    const helpers = globalThis.nethackGlobal.helpers || {};
+                    results.glyphHelper = {
+                        isFunction: typeof helpers.mapGlyphInfoHelper === "function",
+                    };
+                    if (results.glyphHelper.isFunction) {
+                        // glyph 0 = first monster glyph, test at map center
+                        results.glyphHelper.result = helpers.mapGlyphInfoHelper(0, 40, 10, 0);
+                    }
+                } catch (e) {
+                    results.glyphHelper = { error: e.message || String(e) };
+                }
                 return false;
             case "shim_create_nhwindow":
                 return 1;
