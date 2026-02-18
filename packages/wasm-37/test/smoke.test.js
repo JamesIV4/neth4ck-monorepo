@@ -130,6 +130,5 @@ describe("@neth4ck/wasm-37", () => {
             expect(ch.charCodeAt(0)).toBeGreaterThanOrEqual(32);
             expect(ch.charCodeAt(0)).toBeLessThanOrEqual(126);
         });
-
     });
 });
