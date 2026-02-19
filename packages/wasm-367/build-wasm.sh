@@ -61,7 +61,10 @@ echo "  Cleaning stale object files..."
 rm -f "$NH/src/"*.o "$NH/util/"*.o
 
 echo "  Building utilities..."
-make -C util $NATIVE_OVERRIDES makedefs lev_comp dgn_comp dlb
+make -C util $NATIVE_OVERRIDES makedefs lev_comp dgn_comp dlb tilemap
+
+echo "  Generating tile.c..."
+make -C util $NATIVE_OVERRIDES ../src/tile.c
 
 echo "  Generating data files..."
 make -C dat $NATIVE_OVERRIDES
@@ -116,6 +119,7 @@ cat > "$NH/src/Makefile.wasm-noop" << 'NOOP_RULES'
 ../include/vis_tab.h: ;
 vis_tab.c: ;
 ../include/date.h: ;
+tile.c: ;
 NOOP_RULES
 
 # Append -include directive only if not already present (idempotent)
