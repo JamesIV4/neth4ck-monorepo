@@ -1,6 +1,6 @@
 {
     "name": "@neth4ck/wasm-367",
-    "version": "2.1.0",
+    "version": "2.1.1",
     "description": "NetHack 3.6.7 WebAssembly build artifacts",
     "type": "module",
     "main": "src/index.js",
