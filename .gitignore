@@ -12,8 +12,8 @@ tmp/
 dist/
 
 # WASM build artifacts (built from submodules, included in npm packages via "files")
-packages/*/build/nethack.js
-packages/*/build/nethack.wasm
+# packages/*/build/nethack.js
+# packages/*/build/nethack.wasm
 
 # Coverage
 coverage/
