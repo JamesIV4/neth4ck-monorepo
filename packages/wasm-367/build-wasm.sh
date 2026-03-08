@@ -70,7 +70,7 @@ echo "  Generating data files..."
 make -C dat $NATIVE_OVERRIDES
 
 echo "  Building DLB archive..."
-make check-dlb $NATIVE_OVERRIDES
+make dlb $NATIVE_OVERRIDES
 
 echo "  Native build complete."
 
