@@ -15,7 +15,7 @@
         "format": "prettier --write .",
         "format:check": "prettier --check .",
         "prepare": "husky",
-        "prepush": "pnpm exec nx run-many -t lint && pnpm exec vitest run"
+        "prepush": "pnpm format:check && pnpm exec nx run-many -t lint && pnpm exec vitest run"
     },
     "config": {
         "commitizen": {
