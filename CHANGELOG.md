@@ -1,3 +1,9 @@
+## 2.1.3 (2026-03-20)
+
+### 🧱 Updated Dependencies
+
+- Updated @neth4ck/wasm-367 to 2.1.2
+
 ## 2.1.2 (2026-02-19)
 
 ### 🧱 Updated Dependencies
