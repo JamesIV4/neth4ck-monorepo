@@ -90,7 +90,6 @@ describe("@neth4ck/wasm-367", () => {
             const recoverSavefile = Module.cwrap("recover_savefile", "number", []);
             expect(typeof recoverSavefile).toBe("function");
         });
-
         it("can create resume_checkpoint_save wrapper", () => {
             const resumeCheckpointSave = Module.cwrap("resume_checkpoint_save", "number", ["string"]);
             expect(typeof resumeCheckpointSave).toBe("function");
