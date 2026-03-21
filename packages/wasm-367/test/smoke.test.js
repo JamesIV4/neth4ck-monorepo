@@ -85,6 +85,16 @@ describe("@neth4ck/wasm-367", () => {
             const setCallback = Module.cwrap("shim_graphics_set_callback", null, ["string"]);
             expect(typeof setCallback).toBe("function");
         });
+
+        it("can create recover_savefile wrapper", () => {
+            const recoverSavefile = Module.cwrap("recover_savefile", "number", []);
+            expect(typeof recoverSavefile).toBe("function");
+        });
+
+        it("can create resume_checkpoint_save wrapper", () => {
+            const resumeCheckpointSave = Module.cwrap("resume_checkpoint_save", "number", ["string"]);
+            expect(typeof resumeCheckpointSave).toBe("function");
+        });
     });
 
     describe("game initialization", () => {
