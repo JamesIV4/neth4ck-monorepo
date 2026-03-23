@@ -110,6 +110,8 @@ echo "  WASM data directory ready: $WASM_DATA"
 # ------------------------------------------------------------------
 echo ""
 echo "--- Phase 3: Building WASM ---"
+echo "  Cleaning stale wasm target objects..."
+rm -f "$NH/targets/wasm/"*.o "$NH/targets/wasm/nethack.js" "$NH/targets/wasm/nethack.wasm" 2>/dev/null || true
 make CROSS_TO_WASM=1 all
 
 echo ""
