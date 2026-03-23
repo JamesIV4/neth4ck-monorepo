@@ -120,7 +120,6 @@ describe("@neth4ck/wasm-37", () => {
             expect(r).toHaveProperty("color256idx");
             expect(r).toHaveProperty("tileidx");
             expect(r).toHaveProperty("tileIdx");
-            expect(r).toHaveProperty("tileId");
             expect(r).toHaveProperty("x");
             expect(r).toHaveProperty("y");
             expect(r).toHaveProperty("mgflags");

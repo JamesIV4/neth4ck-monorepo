@@ -67,7 +67,12 @@ if [ ! -f "$NH/src/tile.c" ]; then
 fi
 
 echo "  Generating data files..."
-make -C dat $NATIVE_OVERRIDES
+# NetHack 3.7's dat/all does not include the 'options' target, but nhdat packaging expects it.
+make -C dat $NATIVE_OVERRIDES all options
+if [ ! -f "$NH/dat/options" ]; then
+    echo "Error: dat/options was not generated."
+    exit 1
+fi
 
 echo "  Building DLB archive..."
 make dlb $NATIVE_OVERRIDES
