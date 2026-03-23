@@ -1,17 +1,12 @@
 #!/bin/bash
 # Build NetHack 3.7 for WebAssembly (WASM) using Emscripten.
 #
-# NetHack 3.7 has built-in WASM cross-compilation support via CROSS_TO_WASM=1.
-# This script wraps the standard build process.
-#
-# Prerequisites:
-#   - Emscripten SDK installed and activated (emcc, emar on PATH)
-#   - Standard build tools (gcc/cc, make, lex, yacc/bison)
-#
-# Usage:
-#   ./build-wasm.sh
+# This keeps the 3.7 CROSS_TO_WASM flow, but mirrors the 3.6.7 staged build:
+#   Phase 1: native utilities + generated data/tile.c
+#   Phase 2: explicit wasm data directory population
+#   Phase 3: wasm build
 
-set -e
+set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 NH="$SCRIPT_DIR/NetHack"
@@ -51,10 +46,65 @@ make fetch-lua
 echo "  done."
 
 # ------------------------------------------------------------------
-# Build WASM
+# Phase 1: Build native utilities and generate data files.
 # ------------------------------------------------------------------
 echo ""
-echo "--- Building WASM ---"
+echo "--- Phase 1: Building native utilities and data ---"
+NATIVE_OVERRIDES="CC=cc LINK=cc LFLAGS="
+
+echo "  Cleaning stale object files..."
+rm -f "$NH/src/"*.o "$NH/util/"*.o "$NH/src/Sysunix" "$NH/src/nethack" 2>/dev/null || true
+
+echo "  Building utilities..."
+# NetHack 3.7 removed lev_comp and dgn_comp as standalone utility targets.
+make -C util $NATIVE_OVERRIDES makedefs dlb tilemap
+
+echo "  Generating tile.c..."
+make -C util $NATIVE_OVERRIDES ../src/tile.c
+if [ ! -f "$NH/src/tile.c" ]; then
+    echo "Error: src/tile.c was not generated."
+    exit 1
+fi
+
+echo "  Generating data files..."
+make -C dat $NATIVE_OVERRIDES
+
+echo "  Building DLB archive..."
+make dlb $NATIVE_OVERRIDES
+
+echo "  Native generation complete."
+
+# ------------------------------------------------------------------
+# Phase 2: Prepare WASM data directory
+# ------------------------------------------------------------------
+echo ""
+echo "--- Phase 2: Preparing WASM data directory ---"
+
+WASM_DATA="$NH/targets/wasm/wasm-data"
+rm -rf "$WASM_DATA"
+mkdir -p "$WASM_DATA"
+
+if [ -f "$NH/dat/nhdat" ]; then
+    cp "$NH/dat/nhdat" "$WASM_DATA/nhdat"
+    echo "  nhdat: $(wc -c < "$WASM_DATA/nhdat") bytes"
+else
+    echo "Error: nhdat not found in dat/. DLB build may have failed."
+    exit 1
+fi
+
+cp "$NH/sys/libnh/sysconf" "$WASM_DATA/sysconf"
+touch "$WASM_DATA/perm"
+touch "$WASM_DATA/record"
+touch "$WASM_DATA/logfile"
+touch "$WASM_DATA/xlogfile"
+
+echo "  WASM data directory ready: $WASM_DATA"
+
+# ------------------------------------------------------------------
+# Phase 3: Build the WASM game
+# ------------------------------------------------------------------
+echo ""
+echo "--- Phase 3: Building WASM ---"
 make CROSS_TO_WASM=1 all
 
 echo ""
