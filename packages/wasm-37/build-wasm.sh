@@ -34,7 +34,10 @@ echo ""
 # ------------------------------------------------------------------
 echo "--- Setup: Generating Makefiles ---"
 cd "$NH"
-cd sys/unix && ./setup.sh hints/linux.370 && cd ../..
+if ! (cd sys/unix && sh ./setup.sh hints/linux.370); then
+    echo "Error: setup.sh failed."
+    exit 1
+fi
 echo "  done."
 
 # ------------------------------------------------------------------
@@ -42,7 +45,7 @@ echo "  done."
 # ------------------------------------------------------------------
 echo ""
 echo "--- Fetching Lua ---"
-make fetch-lua
+make -C "$NH" fetch-lua
 echo "  done."
 
 # ------------------------------------------------------------------
@@ -112,7 +115,7 @@ echo ""
 echo "--- Phase 3: Building WASM ---"
 echo "  Cleaning stale wasm target objects..."
 rm -f "$NH/targets/wasm/"*.o "$NH/targets/wasm/nethack.js" "$NH/targets/wasm/nethack.wasm" 2>/dev/null || true
-make CROSS_TO_WASM=1 all
+make -C "$NH" CROSS_TO_WASM=1 all
 
 echo ""
 echo "=== Build complete ==="
@@ -129,3 +132,5 @@ else
     ls -lh "$NH/targets/wasm/"*.js "$NH/targets/wasm/"*.wasm 2>/dev/null || true
     exit 1
 fi
+
+
