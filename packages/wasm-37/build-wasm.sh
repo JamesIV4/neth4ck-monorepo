@@ -106,6 +106,11 @@ touch "$WASM_DATA/record"
 touch "$WASM_DATA/logfile"
 touch "$WASM_DATA/xlogfile"
 
+SYSCONF_MAXPLAYERS="$(grep -E '^MAXPLAYERS=' "$WASM_DATA/sysconf" || true)"
+if [ -n "$SYSCONF_MAXPLAYERS" ]; then
+    echo "  embedded sysconf: $SYSCONF_MAXPLAYERS"
+fi
+
 echo "  WASM data directory ready: $WASM_DATA"
 
 # ------------------------------------------------------------------
