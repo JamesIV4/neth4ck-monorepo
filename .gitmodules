@@ -4,5 +4,5 @@
 	branch = wasm-3.6.7
 [submodule "packages/wasm-37/NetHack"]
 	path = packages/wasm-37/NetHack
-	url = https://github.com/apowers313/NetHack.git
+	url = https://github.com/JamesIV4/NetHack.git
 	branch = wasm-3.7
