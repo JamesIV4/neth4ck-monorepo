@@ -101,6 +101,7 @@ else
 fi
 
 cp "$NH/sys/libnh/sysconf" "$WASM_DATA/sysconf"
+cp "$NH/dat/symbols" "$WASM_DATA/symbols"
 touch "$WASM_DATA/perm"
 touch "$WASM_DATA/record"
 touch "$WASM_DATA/logfile"
@@ -137,5 +138,3 @@ else
     ls -lh "$NH/targets/wasm/"*.js "$NH/targets/wasm/"*.wasm 2>/dev/null || true
     exit 1
 fi
-
-

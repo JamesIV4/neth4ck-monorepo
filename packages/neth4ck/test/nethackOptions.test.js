@@ -11,6 +11,10 @@ describe("createNethackOptions", () => {
         expect(createNethackOptions({ autoquiver: true })).toBe("autoquiver");
     });
 
+    it("formats checkpoint option when false", () => {
+        expect(createNethackOptions({ checkpoint: false })).toBe("!checkpoint");
+    });
+
     it("formats boolean option when false", () => {
         expect(createNethackOptions({ autoquiver: false })).toBe("!autoquiver");
     });
@@ -20,8 +24,8 @@ describe("createNethackOptions", () => {
     });
 
     it("combines multiple options with commas", () => {
-        const result = createNethackOptions({ autoquiver: true, name: "TestHero" });
-        expect(result).toBe("autoquiver,name:TestHero");
+        const result = createNethackOptions({ autoquiver: true, checkpoint: false, name: "TestHero" });
+        expect(result).toBe("autoquiver,!checkpoint,name:TestHero");
     });
 
     it("throws for unrecognized option", () => {

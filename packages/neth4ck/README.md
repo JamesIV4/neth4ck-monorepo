@@ -23,7 +23,7 @@ import nethackStart from "@neth4ck/neth4ck";
 import createModule from "@neth4ck/wasm-367";
 
 const Module = await nethackStart(createModule, myCallback, {
-    nethackOptions: { name: "Bubba" },
+    nethackOptions: { name: "Bubba", checkpoint: false },
 });
 
 async function myCallback(name, ...args) {
@@ -42,7 +42,7 @@ async function myCallback(name, ...args) {
 - **createModule** — WASM factory function (default export from a `@neth4ck/wasm-*` package)
 - **callback** — Function called for every NetHack window-port callback. Receives `(name, ...args)`.
 - **options** — Optional object:
-    - **nethackOptions** — Object of NetHack options (e.g., `{ name: 'Bubba', autoquiver: true }`)
+    - **nethackOptions** — Object of NetHack options (e.g., `{ name: 'Bubba', autoquiver: true, checkpoint: false }`)
     - Any other properties are passed through as Emscripten Module config
 
 Returns the initialized Emscripten Module.

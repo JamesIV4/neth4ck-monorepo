@@ -1,5 +1,6 @@
 const optionMap = new Map([
     ["autoquiver", "boolean"],
+    ["checkpoint", "boolean"],
     ["name", "string"],
 ]);
 

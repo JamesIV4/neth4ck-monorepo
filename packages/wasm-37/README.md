@@ -17,7 +17,7 @@ import nethackStart from "@neth4ck/neth4ck";
 import createModule from "@neth4ck/wasm-37";
 
 await nethackStart(createModule, myCallback, {
-    nethackOptions: { name: "Bubba" },
+    nethackOptions: { name: "Bubba", checkpoint: false },
 });
 ```
 
