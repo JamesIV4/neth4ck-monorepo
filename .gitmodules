@@ -6,3 +6,7 @@
 	path = packages/wasm-37/NetHack
 	url = https://github.com/JamesIV4/NetHack.git
 	branch = wasm-3.7
+[submodule "packages/wasm-5/NetHack"]
+	path = packages/wasm-5/NetHack
+	url = https://github.com/JamesIV4/NetHack.git
+	branch = forked-build-wasm-37
